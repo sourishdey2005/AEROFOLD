@@ -1,0 +1,168 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AEROFOLD™ | Engineering Flight</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --accent: #007AFF;
+            --bg: #050505;
+        }
+        body {
+            margin: 0;
+            background-color: var(--bg);
+            color: white;
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+        }
+        canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            outline: none;
+            z-index: 1;
+        }
+        .content {
+            position: relative;
+            z-index: 2;
+            pointer-events: none;
+        }
+        section {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+            text-align: center;
+        }
+        .text-reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+            pointer-events: auto;
+        }
+        .text-reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .loader {
+            position: fixed;
+            inset: 0;
+            background: #000;
+            z-index: 999;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 1s ease;
+        }
+        .loader-bar {
+            width: 200px;
+            height: 2px;
+            background: #222;
+            margin-top: 20px;
+            position: relative;
+        }
+        .loader-progress {
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 0%;
+            background: var(--accent);
+            box-shadow: 0 0 10px var(--accent);
+        }
+    </style>
+</head>
+<body>
+    <div class="loader" id="loader">
+        <h2 class="text-2xl font-bold tracking-tighter">AEROFOLD™</h2>
+        <div class="loader-bar">
+            <div class="loader-progress" id="loader-progress"></div>
+        </div>
+    </div>
+
+    <canvas id="webgl"></canvas>
+
+    <main class="content">
+        <!-- Section 1: Hero -->
+        <section id="hero">
+            <div class="text-reveal active">
+                <h1 class="text-6xl md:text-8xl font-bold tracking-tighter mb-4">AEROFOLD™</h1>
+                <p class="text-xl md:text-2xl text-gray-400 max-w-xl mx-auto uppercase tracking-widest">
+                    Engineering Flight, One Fold at a Time
+                </p>
+            </div>
+        </section>
+
+        <!-- Section 2: Precision Arms -->
+        <section id="arms">
+            <div class="text-reveal">
+                <h2 class="text-4xl md:text-6xl font-bold mb-4">Precision Arms</h2>
+                <p class="text-lg md:text-xl text-blue-400 max-w-lg">
+                    Carbon-fiber precision arms with aerospace hinges. 
+                    Unfolding strength in milliseconds.
+                </p>
+            </div>
+        </section>
+
+        <!-- Section 3: Vision System -->
+        <section id="vision">
+            <div class="text-reveal">
+                <h2 class="text-4xl md:text-6xl font-bold mb-4">Vision System</h2>
+                <p class="text-lg md:text-xl text-blue-400 max-w-lg">
+                    8K AI-powered vision with night stabilization. 
+                    The world, seen with absolute clarity.
+                </p>
+            </div>
+        </section>
+
+        <!-- Section 4: Propulsion -->
+        <section id="propulsion">
+            <div class="text-reveal">
+                <h2 class="text-4xl md:text-6xl font-bold mb-4">Silent Thrust</h2>
+                <p class="text-lg md:text-xl text-blue-400 max-w-lg">
+                    Advanced silent motors with adaptive airflow. 
+                    Power that whispers.
+                </p>
+            </div>
+        </section>
+
+        <!-- Section 5: Autonomous -->
+        <section id="autonomous">
+            <div class="text-reveal">
+                <h2 class="text-4xl md:text-6xl font-bold mb-4">Autonomous Flight</h2>
+                <p class="text-lg md:text-xl text-blue-400 max-w-lg">
+                    AI-guided navigation with 360-degree obstacle avoidance. 
+                    Fly without limits.
+                </p>
+            </div>
+        </section>
+
+        <!-- Section 6: CTA -->
+        <section id="cta">
+            <div class="text-reveal">
+                <h2 class="text-4xl md:text-6xl font-bold mb-6">Ready for Departure</h2>
+                <button class="bg-blue-600 hover:bg-blue-500 text-white px-10 py-4 rounded-full font-bold transition-all transform hover:scale-105 active:scale-95 shadow-[0_0_20px_rgba(0,122,255,0.4)]">
+                    LAUNCH THE FUTURE
+                </button>
+            </div>
+        </section>
+    </main>
+
+    <!-- Dependencies -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    
+    <script type="module" src="index.tsx"></script>
+</body>
+</html>

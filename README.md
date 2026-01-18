@@ -1,11 +1,20 @@
-<div align="center">
 
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
+# AEROFOLD™ 3D Experience
 
-  <h1>Built with AI Studio</h2>
+A high-performance cinematic product landing page for a foldable drone company.
 
-  <p>The fastest path from prompt to production with Gemini.</p>
+## Setup
+1. Ensure you have a local web server (like Live Server in VSCode).
+2. For production assets, replace the `createMockDrone` function with a `GLTFLoader` call to a high-quality `drone.glb`.
+3. The GLB should have separate nodes for `Arms`, `Propellers`, `Camera`, and `LandingGear` to target them in GSAP.
 
-  <a href="https://aistudio.google.com/apps">Start building</a>
+## Deployment on Vercel
+1. Push your code to a GitHub repository.
+2. Connect the repository to Vercel.
+3. Ensure `index.html`, `App.js`, and any assets are in the root directory.
+4. Deploy!
 
-</div>
+## Technical Notes
+- **Performance**: Antialiasing is enabled, but pixel ratio is capped at 2 for mobile performance.
+- **Visuals**: Emissive materials simulate "Electric Blue" accent glow without heavy post-processing.
+- **Interactivity**: ScrollTrigger is used for precise 1:1 mapping of scroll depth to drone unfolding state.
