@@ -10,16 +10,16 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        :root { --accent: #007AFF; --bg: #050505; }
+        :root { --accent: #FFCC00; --bg: #050505; }
         body { margin: 0; background-color: var(--bg); color: white; font-family: 'Inter', sans-serif; overflow-x: hidden; }
         canvas { position: fixed; top: 0; left: 0; z-index: 1; pointer-events: none; }
         .content { position: relative; z-index: 10; pointer-events: none; }
         section { min-height: 120vh; display: flex; flex-direction: column; justify-content: center; align-items: flex-start; padding: 10vw; text-align: left; }
         .text-reveal { opacity: 0; transform: translateX(-50px); transition: all 1s cubic-bezier(0.16, 1, 0.3, 1); pointer-events: auto; }
         .text-reveal.active { opacity: 1; transform: translateX(0); }
-        .hud-ui { position: fixed; inset: 0; z-index: 5; pointer-events: none; padding: 2rem; display: flex; flex-direction: column; justify-content: space-between; font-family: 'JetBrains Mono', monospace; color: var(--accent); opacity: 0.6; }
+        .hud-ui { position: fixed; inset: 0; z-index: 5; pointer-events: none; padding: 2rem; display: flex; flex-direction: column; justify-content: space-between; font-family: 'JetBrains Mono', monospace; color: var(--accent); opacity: 0.8; }
         .loader { position: fixed; inset: 0; background: #000; z-index: 999; display: flex; flex-direction: column; justify-content: center; align-items: center; transition: opacity 1s ease; }
-        .btn-launch { background: var(--accent); box-shadow: 0 0 30px rgba(0, 122, 255, 0.4); pointer-events: auto; }
+        .btn-launch { background: var(--accent); color: black; box-shadow: 0 0 30px rgba(255, 204, 0, 0.3); pointer-events: auto; }
         .tech-tag { font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: var(--accent); text-transform: uppercase; letter-spacing: 0.2em; border-left: 2px solid var(--accent); padding-left: 10px; margin-bottom: 1rem; }
     </style>
 </head>
@@ -27,19 +27,19 @@
     <div class="loader" id="loader">
         <h2 class="text-3xl font-black tracking-tighter italic">AEROFOLD™</h2>
         <div class="w-48 h-[2px] bg-zinc-800 mt-6 relative">
-            <div class="absolute left-0 top-0 h-full bg-blue-600 shadow-[0_0_15px_#007AFF]" id="loader-progress" style="width: 0%"></div>
+            <div class="absolute left-0 top-0 h-full bg-yellow-500 shadow-[0_0_15px_#FFCC00]" id="loader-progress" style="width: 0%"></div>
         </div>
-        <p class="mt-4 text-[10px] uppercase tracking-widest text-zinc-500 font-mono">Calibrating Avionic Kernels...</p>
+        <p class="mt-4 text-[10px] uppercase tracking-widest text-zinc-500 font-mono">Loading Industrial Core...</p>
     </div>
 
     <div class="hud-ui">
         <div class="flex justify-between items-start">
-            <div class="text-xs">SYSTEM: READY<br>LAT: 37.7749 N<br>LNG: 122.4194 W</div>
-            <div class="text-right text-xs">AEROFOLD CORE v4.2<br>FIRMWARE: ENCRYPTED</div>
+            <div class="text-xs">AVIONICS: ONLINE<br>THRUST: STABLE<br>GNSS: 12 SAT</div>
+            <div class="text-right text-xs">INDUSTRIAL SERIES X1<br>SERIAL: AF-992-K</div>
         </div>
         <div class="flex justify-between items-end">
-            <div class="text-[10px] leading-relaxed">STABILIZATION: ACTIVE<br>SENSORS: 360° LIDAR<br>THERMAL: OPTIMAL</div>
-            <div class="text-3xl font-bold italic" id="hud-altitude">000m</div>
+            <div class="text-[10px] leading-relaxed">BATTERY: 98%<br>RANGE: 12.4KM<br>TEMP: 42°C</div>
+            <div class="text-3xl font-bold italic" id="hud-altitude">000ft</div>
         </div>
     </div>
 
@@ -48,82 +48,82 @@
     <main class="content">
         <section id="hero">
             <div class="text-reveal active">
-                <div class="tech-tag">Engineering-First Mindset</div>
+                <div class="tech-tag">Industrial Grade Performance</div>
                 <h1 class="text-7xl md:text-9xl font-black tracking-tighter leading-none mb-6 italic">AEROFOLD™</h1>
-                <p class="text-xl text-zinc-400 max-w-xl">Redefining flight dynamics through collapsible carbon-fiber architecture.</p>
-                <div class="mt-12 animate-bounce opacity-40 text-xs tracking-widest uppercase">Scroll to Initialize</div>
+                <p class="text-xl text-zinc-400 max-w-xl">Ruggedized architecture for extreme survey and heavy-lift operations.</p>
+                <div class="mt-12 animate-bounce opacity-40 text-xs tracking-widest uppercase">Initiate Deployment Sequence</div>
             </div>
         </section>
 
         <section id="transition">
             <div class="text-reveal">
-                <div class="tech-tag">Phase 01: Deploy</div>
-                <h2 class="text-5xl font-bold mb-4">Philosophy of Flight</h2>
-                <p class="text-zinc-400 max-w-md">We don't build drones. We build folding kinetic sculptures that defy atmospheric resistance.</p>
+                <div class="tech-tag">Phase 01: Unfold</div>
+                <h2 class="text-5xl font-bold mb-4">Philosophy of Utility</h2>
+                <p class="text-zinc-400 max-w-md">Our high-visibility "Hazard" livery isn't just for show. It's built for search, rescue, and high-risk inspection.</p>
             </div>
         </section>
 
         <section id="arms">
             <div class="text-reveal">
-                <div class="tech-tag">Material Science</div>
-                <h2 class="text-5xl font-bold mb-4">Precision Arm Engineering</h2>
-                <p class="text-zinc-400 max-w-md">Aerospace-grade joints stress-tested for 50,000 deployment cycles. Zero-flex carbon fiber beams.</p>
+                <div class="tech-tag">Kinetic Chassis</div>
+                <h2 class="text-5xl font-bold mb-4">Heavy Duty Hinges</h2>
+                <p class="text-zinc-400 max-w-md">Reinforced block joints with titanium locking pins ensure absolute rigidity under load.</p>
             </div>
         </section>
 
         <section id="propulsion">
             <div class="text-reveal">
-                <div class="tech-tag">Thrust Architecture</div>
-                <h2 class="text-5xl font-bold mb-4">Advanced Propulsion</h2>
-                <p class="text-zinc-400 max-w-md">Bi-directional airflow simulation creates a silent vortex, increasing lift efficiency by 22%.</p>
+                <div class="tech-tag">Encapsulated Rotors</div>
+                <h2 class="text-5xl font-bold mb-4">Propulsion Ring Tech</h2>
+                <p class="text-zinc-400 max-w-md">Protective circular shrouds minimize drag and maximize safety in tight urban environments.</p>
             </div>
         </section>
 
         <section id="vision">
             <div class="text-reveal">
-                <div class="tech-tag">Optical Fusion</div>
-                <h2 class="text-5xl font-bold mb-4">Vision Core System</h2>
-                <p class="text-zinc-400 max-w-md">Dual-axis mechanical gimbal with AI-assisted target locking and 8K sensor fusion.</p>
+                <div class="tech-tag">Thermal & Optical</div>
+                <h2 class="text-5xl font-bold mb-4">Precision Vision Core</h2>
+                <p class="text-zinc-400 max-w-md">Mechanical 3-axis gimbal stabilizing dual 1" CMOS sensors with 120fps capability.</p>
             </div>
         </section>
 
         <section id="brain">
             <div class="text-reveal">
                 <div class="tech-tag">Neural Processing</div>
-                <h2 class="text-5xl font-bold mb-4">Autonomous Brain</h2>
-                <p class="text-zinc-400 max-w-md">Onboard 4nm AI chips processing real-time decision graphs for complex urban navigation.</p>
+                <h2 class="text-5xl font-bold mb-4">Nvidia Powered AI</h2>
+                <p class="text-zinc-400 max-w-md">Dual Jetson-class inference chips handling pathfinding at 400 TOPS. Absolute autonomy.</p>
             </div>
         </section>
 
         <section id="stabilization">
             <div class="text-reveal">
-                <div class="tech-tag">Kinetic Control</div>
-                <h2 class="text-5xl font-bold mb-4">6-Axis Gyro Control</h2>
-                <p class="text-zinc-400 max-w-md">Instant turbulence compensation. Even in Grade 7 winds, the footage remains absolute.</p>
+                <div class="tech-tag">Avionic Balance</div>
+                <h2 class="text-5xl font-bold mb-4">6-Axis Flight Control</h2>
+                <p class="text-zinc-400 max-w-md">Active vectoring motors adjust 2000 times per second to neutralize environmental turbulence.</p>
             </div>
         </section>
 
         <section id="battery">
             <div class="text-reveal">
-                <div class="tech-tag">Energy Density</div>
-                <h2 class="text-5xl font-bold mb-4">Battery Intelligence</h2>
-                <p class="text-zinc-400 max-w-md">Smart cell distribution with active heat management. 45-minute flight time in extreme cold.</p>
+                <div class="tech-tag">Solid State Energy</div>
+                <h2 class="text-5xl font-bold mb-4">Liquid Cooled Cells</h2>
+                <p class="text-zinc-400 max-w-md">Proprietary heat sinks embedded in the main chassis keep battery temps within +/- 2°C for peak life.</p>
             </div>
         </section>
 
         <section id="weather">
             <div class="text-reveal">
-                <div class="tech-tag">Hardened Exterior</div>
-                <h2 class="text-5xl font-bold mb-4">IP67 Weather Resistance</h2>
-                <p class="text-zinc-400 max-w-md">Rain, dust, and ice are no longer obstacles. Fly when others land.</p>
+                <div class="tech-tag">Atmospheric Proof</div>
+                <h2 class="text-5xl font-bold mb-4">IP67 Immersion Rated</h2>
+                <p class="text-zinc-400 max-w-md">The chassis is salt-fog resistant and dust-proof. Tested in hurricanes, deployed everywhere.</p>
             </div>
         </section>
 
         <section id="cta">
             <div class="text-reveal flex flex-col items-center w-full text-center">
                 <h2 class="text-6xl font-black italic mb-8">LAUNCH THE FUTURE</h2>
-                <button class="btn-launch text-white px-16 py-6 rounded-sm font-black tracking-widest text-sm uppercase transition-all">
-                    Pre-Order Series One
+                <button class="btn-launch px-16 py-6 rounded-sm font-black tracking-widest text-sm uppercase transition-all">
+                    Pre-Order Series X1
                 </button>
             </div>
         </section>
