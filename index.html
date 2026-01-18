@@ -175,10 +175,33 @@
             background: rgba(0, 102, 255, 0.05);
             transition: transform 0.3s ease;
         }
-        .badge:hover { transform: scale(1.05); }
 
         .align-right { align-self: flex-end; text-align: right; }
         .align-right .tech-tag { border-left: none; border-right: 4px solid var(--hud-blue); padding-left: 0; padding-right: 15px; }
+
+        .comparison-table {
+            width: 100%;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
+            margin-top: 2rem;
+            border-collapse: collapse;
+        }
+        .comparison-table th, .comparison-table td {
+            padding: 12px;
+            border-bottom: 1px solid rgba(0,0,0,0.1);
+            text-align: left;
+        }
+        .comparison-table .highlight { color: var(--hud-blue); font-weight: bold; }
+
+        .price-card {
+            background: #fff;
+            border: 1px solid rgba(0,0,0,0.1);
+            padding: 2rem;
+            width: 100%;
+            margin-bottom: 1rem;
+            transition: border-color 0.3s ease;
+        }
+        .price-card:hover { border-color: var(--hud-blue); }
 
         .metric-card {
             background: #f8fafc;
@@ -233,6 +256,7 @@
     <canvas id="webgl"></canvas>
 
     <main class="content">
+        <!-- HERO -->
         <section id="hero">
             <div class="text-reveal active">
                 <div class="tech-tag">Aeronautical Origami</div>
@@ -241,7 +265,7 @@
             </div>
         </section>
 
-        <!-- PHASE 01: CORE TECH -->
+        <!-- KINETIC SEQUENCE -->
         <section id="transition">
             <div class="text-reveal">
                 <div class="tech-tag">01 // Kinetic Sequence</div>
@@ -250,90 +274,104 @@
             </div>
         </section>
 
-        <!-- PHASE 02: STRUCTURAL INTEGRITY -->
+        <!-- PERFORMANCE BENCHMARKS -->
         <div class="phase-divider"></div>
-        <div class="phase-title">Phase 02: Structural Integrity</div>
-
-        <section id="materials" class="align-right">
+        <div class="phase-title">Phase 02: Performance Benchmarks</div>
+        <section id="benchmarks" class="align-right">
             <div class="text-reveal">
-                <div class="tech-tag">02 // Elemental Science</div>
-                <h2 class="text-5xl md:text-6xl font-black mb-6">Materials & Quality</h2>
-                <p>High-modulus carbon fiber meets magnesium-lithium alloy. Microscopic texture zoom reveals drag-reducing surfaces designed for silent, efficient atmospheric penetration.</p>
-            </div>
-        </section>
-
-        <section id="safety">
-            <div class="text-reveal">
-                <div class="tech-tag">03 // Fail-Safe Logic</div>
-                <h2 class="text-5xl md:text-6xl font-black mb-6">Safety Redundancy</h2>
-                <p>Equipped with fail-safe motors and emergency landing AI. If a propulsion unit fails, the system re-calculates thrust vectors instantly to protect your investment.</p>
-            </div>
-        </section>
-
-        <!-- PHASE 03: INTELLIGENCE & COMPLIANCE -->
-        <div class="phase-divider"></div>
-        <div class="phase-title">Phase 03: Intelligence & Compliance</div>
-
-        <section id="compliance">
-            <div class="text-reveal">
-                <div class="tech-tag">04 // Global Standards</div>
-                <h2 class="text-5xl md:text-6xl font-black mb-6">Compliance & Certification</h2>
-                <p>The Series X1 is globally ready, meeting the most stringent aeronautical regulations for commercial and industrial operations including DGCA Type-C and FAA Part 107.</p>
-                <div class="badge-grid">
-                    <div class="badge">DGCA TYPE-C</div>
-                    <div class="badge">FAA PART 107</div>
-                    <div class="badge">CE CLASS C2</div>
+                <div class="tech-tag">02 // Flight Dynamics</div>
+                <h2 class="text-5xl md:text-6xl font-black mb-6">Speed & Endurance</h2>
+                <p>Our propulsion system delivers industry-leading metrics across all atmospheric conditions.</p>
+                <div class="mt-8 space-y-6 text-left inline-block w-full">
+                    <div>
+                        <div class="flex justify-between font-mono text-[10px] mb-1"><span>TOP SPEED: 95 KM/H</span><span>100%</span></div>
+                        <div class="progress-bar"><div class="progress-fill" style="width: 100%"></div></div>
+                    </div>
+                    <div>
+                        <div class="flex justify-between font-mono text-[10px] mb-1"><span>MAX RANGE: 15 KM</span><span>88%</span></div>
+                        <div class="progress-bar"><div class="progress-fill" style="width: 88%"></div></div>
+                    </div>
+                    <div>
+                        <div class="flex justify-between font-mono text-[10px] mb-1"><span>ENDURANCE: 55 MINS</span><span>92%</span></div>
+                        <div class="progress-bar"><div class="progress-fill" style="width: 92%"></div></div>
+                    </div>
                 </div>
             </div>
         </section>
 
-        <section id="ota" class="align-right">
+        <!-- COMPETITIVE COMPARISON -->
+        <section id="comparison">
             <div class="text-reveal">
-                <div class="tech-tag">05 // Wireless Evolution</div>
-                <h2 class="text-5xl md:text-6xl font-black mb-6">Firmware & OTA</h2>
-                <p>Your fleet evolves in real-time. Wireless OTA updates deliver performance enhancements, updated mission parameters, and security patches without hardware downtime.</p>
+                <div class="tech-tag">03 // Market Analysis</div>
+                <h2 class="text-5xl md:text-6xl font-black mb-6">Versus Industry</h2>
+                <p>AEROFOLD™ outperforms leading competitors in deployability and airframe stiffness.</p>
+                <table class="comparison-table">
+                    <thead>
+                        <tr><th>FEATURE</th><th>COMPETITORS</th><th class="highlight">AEROFOLD™</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>DEPLOY TIME</td><td>240s</td><td class="highlight">15s</td></tr>
+                        <tr><td>FOLD RATIO</td><td>1.2:1</td><td class="highlight">4.5:1</td></tr>
+                        <tr><td>AI COMPUTE</td><td>CLOUD-ONLY</td><td class="highlight">EDGE-NATIVE</td></tr>
+                    </tbody>
+                </table>
             </div>
         </section>
 
-        <section id="ai-pipeline">
+        <!-- PRICING & CONFIGS -->
+        <div class="phase-divider"></div>
+        <div class="phase-title">Phase 03: Configuration</div>
+        <section id="pricing" class="align-right">
             <div class="text-reveal">
-                <div class="tech-tag">06 // Neural Evolution</div>
-                <h2 class="text-5xl md:text-6xl font-black mb-6">AI Model Pipeline</h2>
-                <p>Simulation &rarr; Real-world transfer. We train our models in hyper-realistic physics engines before deploying to the airframe, ensuring 99.9% reliability in unpredictable edge-case scenarios.</p>
-            </div>
-        </section>
-
-        <section id="edge-ai" class="align-right">
-            <div class="text-reveal">
-                <div class="tech-tag">07 // Compute Logic</div>
-                <h2 class="text-5xl md:text-6xl font-black mb-6">Edge AI vs Cloud</h2>
-                <p>Ultra-low latency processing happens directly on the airframe (0.4ms) for flight-critical decisions, while analytical telemetry is streamed to the cloud for heavy computation.</p>
-            </div>
-        </section>
-
-        <section id="reliability">
-            <div class="text-reveal">
-                <div class="tech-tag">08 // Operational Truth</div>
-                <h2 class="text-5xl md:text-6xl font-black mb-6">Reliability Metrics</h2>
-                <p>Proven resilience in extreme environments. Our MTBF (Mean Time Between Failure) charts demonstrate the durability of the Series X1 powertrain and logic board.</p>
-                <div class="metric-card">
-                    <div class="flex justify-between items-end mb-2">
-                        <div class="text-[10px] font-mono font-bold">MTBF: 12,000 FLIGHT HOURS</div>
-                        <div class="text-[10px] font-mono text-blue-600">RELIABILITY INDEX: 0.999</div>
+                <div class="tech-tag">04 // Fleet Logistics</div>
+                <h2 class="text-5xl md:text-6xl font-black mb-6">Packages</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-8 text-left">
+                    <div class="price-card">
+                        <div class="font-black text-xl mb-2">CORE X1</div>
+                        <div class="text-[11px] font-mono text-zinc-500 mb-4">STANDARD INDUSTRIAL</div>
+                        <ul class="text-[12px] space-y-2 mb-6">
+                            <li>+ 4K Vision Stack</li>
+                            <li>+ Standard Controller</li>
+                            <li>+ 2 Battery Packs</li>
+                        </ul>
+                        <div class="font-black">$8,499</div>
                     </div>
-                    <div class="progress-bar">
-                        <div class="progress-fill"></div>
+                    <div class="price-card border-blue-500">
+                        <div class="font-black text-xl mb-2 text-blue-600">PRO SERIES</div>
+                        <div class="text-[11px] font-mono text-blue-500 mb-4">EDGE AI + 8K GIMBAL</div>
+                        <ul class="text-[12px] space-y-2 mb-6">
+                            <li>+ Neural Compute Stick</li>
+                            <li>+ Lidar Obstacle Detection</li>
+                            <li>+ 6 Battery Packs</li>
+                        </ul>
+                        <div class="font-black">$14,200</div>
                     </div>
-                    <div class="text-[10px] font-mono mt-2 text-zinc-500 uppercase">System failure rate: &lt; 0.004% / 1000h</div>
                 </div>
             </div>
         </section>
 
+        <!-- SDK & DEVELOPER -->
+        <section id="sdk">
+            <div class="text-reveal">
+                <div class="tech-tag">05 // Open Ecosystem</div>
+                <h2 class="text-5xl md:text-6xl font-black mb-6">Developer SDK</h2>
+                <p>Full access to MAVLink telemetry, gimbal control, and edge-processing hooks. Build custom AI modules and deploy them directly to the Series X1 hardware.</p>
+                <div class="bg-zinc-900 text-green-400 p-6 font-mono text-[11px] mt-8 rounded-sm">
+                    <span class="text-zinc-500">// Initialize Aerofold SDK</span><br>
+                    const drone = await Aerofold.connect('X1-GENESIS');<br>
+                    drone.on('telemetry', (data) => {<br>
+                    &nbsp;&nbsp;console.log(`Altitude: ${data.alt}ft`);<br>
+                    });
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA -->
         <section id="cta">
             <div class="text-reveal flex flex-col items-center w-full text-center">
                 <h2 class="text-6xl md:text-8xl font-black italic mb-10">THE FUTURE IS DEPLOYED</h2>
                 <button class="btn-launch px-24 py-10 rounded-sm font-black tracking-widest text-sm uppercase">
-                    Consult an Expert
+                    Launch the Future
                 </button>
             </div>
         </section>
