@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AEROFOLD™ | Engineering Flight</title>
+    <title>AEROFOLD™ | Industrial Aeronautical Systems</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -25,7 +25,6 @@
             overflow-x: hidden; 
         }
         
-        /* Fixed Background Layer */
         .bg-layer {
             position: fixed;
             top: 0;
@@ -36,7 +35,6 @@
             z-index: -1;
         }
 
-        /* 3D Canvas Layer */
         canvas { 
             position: fixed; 
             top: 0; 
@@ -45,7 +43,6 @@
             pointer-events: none; 
         }
 
-        /* HUD Layer */
         .hud-ui { 
             position: fixed; 
             inset: 0; 
@@ -60,7 +57,6 @@
             text-shadow: 0 1px 2px rgba(255,255,255,0.8);
         }
 
-        /* Content Layer */
         .content { 
             position: relative; 
             z-index: 100; 
@@ -68,7 +64,7 @@
         }
         
         section { 
-            min-height: 120vh; 
+            min-height: 140vh; 
             display: flex; 
             flex-direction: column; 
             justify-content: center; 
@@ -79,10 +75,10 @@
         
         .text-reveal { 
             opacity: 0; 
-            transform: translateY(20px); 
-            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1); 
+            transform: translateY(40px); 
+            transition: all 1.2s cubic-bezier(0.16, 1, 0.3, 1); 
             pointer-events: auto; 
-            max-width: 600px;
+            max-width: 700px;
         }
         
         .text-reveal.active { 
@@ -118,30 +114,52 @@
         
         .tech-tag { 
             font-family: 'JetBrains Mono', monospace; 
-            font-size: 0.8rem; 
+            font-size: 0.85rem; 
             color: var(--hud-blue); 
             text-transform: uppercase; 
-            letter-spacing: 0.3em; 
-            border-left: 3px solid var(--hud-blue); 
+            letter-spacing: 0.4em; 
+            border-left: 4px solid var(--hud-blue); 
             padding-left: 15px; 
             margin-bottom: 1.5rem; 
             font-weight: 800; 
         }
 
         h1, h2 {
-            text-shadow: 0 2px 10px rgba(255,255,255,0.5);
+            text-shadow: 0 4px 15px rgba(255,255,255,0.8);
             color: #000 !important;
+            letter-spacing: -0.03em;
         }
 
         p {
-            color: #222 !important;
-            line-height: 1.6;
+            color: #333 !important;
+            line-height: 1.8;
+            font-weight: 400;
+            font-size: 1.1rem;
         }
 
-        /* Ensure texts are visible over the canvas */
-        .content section div {
-            background: rgba(255, 255, 255, 0.01); /* Invisible but ensures a block */
-            backdrop-filter: blur(0px);
+        .stat-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 30px;
+            margin-top: 3rem;
+            font-family: 'JetBrains Mono', monospace;
+            width: 100%;
+        }
+
+        .stat-item {
+            border-top: 2px solid #eee;
+            padding-top: 15px;
+        }
+
+        .stat-val { font-weight: 900; color: #000; font-size: 1.4rem; }
+        .stat-label { font-size: 0.75rem; text-transform: uppercase; color: #888; letter-spacing: 0.1em; }
+
+        .phase-divider {
+            width: 100%;
+            height: 1px;
+            background: linear-gradient(to right, var(--hud-blue), transparent);
+            margin: 4rem 0;
+            opacity: 0.3;
         }
     </style>
 </head>
@@ -153,16 +171,16 @@
         <div class="w-64 h-[3px] bg-zinc-100 mt-8 relative">
             <div class="absolute left-0 top-0 h-full bg-blue-600" id="loader-progress" style="width: 0%"></div>
         </div>
-        <p class="mt-4 text-[11px] uppercase tracking-widest text-zinc-500 font-mono font-bold">Initializing Avionics...</p>
+        <p class="mt-4 text-[11px] uppercase tracking-widest text-zinc-500 font-mono font-bold">Synchronizing Global Avionics Network...</p>
     </div>
 
     <div class="hud-ui">
         <div class="flex justify-between items-start">
-            <div class="text-[11px] font-black leading-tight">SYSTEMS: OPTIMAL<br>VECTOR: STABLE<br>GNSS: ACTIVE</div>
-            <div class="text-right text-[11px] font-black">MODEL: SERIES X1<br>ID: #AF-992-K</div>
+            <div class="text-[11px] font-black leading-tight">TELEMETRY: ENCRYPTED<br>WIND: 14 KTS NW<br>SAT: 18 FIX (P-MODE)</div>
+            <div class="text-right text-[11px] font-black">AEROFOLD INDUSTRIAL<br>SERIES X1-GENESIS</div>
         </div>
         <div class="flex justify-between items-end">
-            <div class="text-[11px] font-black">POWER: 98%<br>TEMP: 42°C</div>
+            <div class="text-[11px] font-black">ENCRYPTION: AES-256<br>MISSION: ACTIVE</div>
             <div class="text-4xl font-black italic" id="hud-altitude">000ft</div>
         </div>
     </div>
@@ -170,60 +188,128 @@
     <canvas id="webgl"></canvas>
 
     <main class="content">
+        <!-- PHASE 1 — IMMERSIVE PRODUCT STORY -->
+        
         <section id="hero">
             <div class="text-reveal active">
-                <div class="tech-tag">Next-Gen Industrial</div>
-                <h1 class="text-7xl md:text-9xl font-black tracking-tighter leading-none mb-6 italic">AEROFOLD™</h1>
-                <p class="text-xl font-medium max-w-xl">Engineering Flight, One Fold at a Time. Ruggedized architecture for extreme survey and heavy-lift operations.</p>
-                <div class="mt-16 animate-bounce opacity-60 text-[10px] tracking-[0.4em] uppercase font-black">Scroll to Deploy</div>
+                <div class="tech-tag">Aeronautical Origami</div>
+                <h1 class="text-7xl md:text-9xl font-black mb-6 italic">AEROFOLD™</h1>
+                <p class="max-w-xl">The convergence of extreme mobility and industrial-grade airframe integrity. A breakthrough in modular aeronautics, optimized for rapid rapid response deployment.</p>
+                <div class="stat-grid">
+                    <div class="stat-item"><div class="stat-val">2.4kg</div><div class="stat-label">Chassis Weight</div></div>
+                    <div class="stat-item"><div class="stat-val">12s</div><div class="stat-label">Deploy Time</div></div>
+                </div>
             </div>
         </section>
 
-        <section id="transition">
+        <section id="philosophy">
             <div class="text-reveal">
-                <div class="tech-tag">Phase 01: Unfold</div>
-                <h2 class="text-5xl md:text-6xl font-black mb-6">Philosophy of Utility</h2>
-                <p class="text-lg font-medium">Our high-visibility "Hazard" livery ensures visual tracking in high-risk search and rescue environments.</p>
+                <div class="tech-tag">01 // Engineering Mindset</div>
+                <h2 class="text-5xl md:text-6xl font-black mb-6">Philosophy of Flight</h2>
+                <p>We reject the fragility of conventional consumer drones. AEROFOLD was conceived as an extension of the operator’s intent—rugged, predictable, and immediately lethal in its efficiency. Every curve serves a thermal or aerodynamic purpose.</p>
             </div>
         </section>
 
         <section id="arms">
             <div class="text-reveal">
-                <div class="tech-tag">Kinetic Chassis</div>
-                <h2 class="text-5xl md:text-6xl font-black mb-6">Heavy Duty Hinges</h2>
-                <p class="text-lg font-medium">Reinforced block joints with titanium locking pins ensure absolute rigidity under maximum aerodynamic stress.</p>
+                <div class="tech-tag">02 // Kinetic Engineering</div>
+                <h2 class="text-5xl md:text-6xl font-black mb-6">Precision Joint Systems</h2>
+                <p>Utilizing high-modulus carbon fiber and titanium T6-7075 alloy, the arm hinges are rated for 50,000 cycles. The proprietary "Snap-Lock" mechanism ensures zero-play rigidity, even under 4G lateral maneuvers.</p>
             </div>
         </section>
 
         <section id="propulsion">
             <div class="text-reveal">
-                <div class="tech-tag">Encapsulated Rotors</div>
-                <h2 class="text-5xl md:text-6xl font-black mb-6">Propulsion Rings</h2>
-                <p class="text-lg font-medium">Protective circular shrouds minimize tip-vortex drag and maximize operational safety in confined spaces.</p>
+                <div class="tech-tag">03 // Aerodynamic Thrust</div>
+                <h2 class="text-5xl md:text-6xl font-black mb-6">Propulsion Shrouds</h2>
+                <p>By encapsulating the rotor tips, we negate the high-frequency acoustic whistle common in multi-rotors. The result is a 12dB reduction in noise floor and a 15% increase in static thrust through boundary layer control.</p>
             </div>
         </section>
 
         <section id="vision">
             <div class="text-reveal">
-                <div class="tech-tag">Precision Optics</div>
-                <h2 class="text-5xl md:text-6xl font-black mb-6">Vision Core</h2>
-                <p class="text-lg font-medium">Mechanical 3-axis gimbal stabilizing dual 1" CMOS sensors. Crystal clear intelligence, day or night.</p>
+                <div class="tech-tag">04 // Visual Intelligence</div>
+                <h2 class="text-5xl md:text-6xl font-black mb-6">The Vision Core</h2>
+                <p>Dual-sensor fusion allows for overlapping LWIR thermal data and 8K optical detail. Integrated laser rangefinders provide millimetric depth maps for precision infrastructure inspection.</p>
             </div>
         </section>
 
         <section id="brain">
             <div class="text-reveal">
-                <div class="tech-tag">Neural Processing</div>
-                <h2 class="text-5xl md:text-6xl font-black mb-6">AI Navigation</h2>
-                <p class="text-lg font-medium">Dual Jetson-class inference chips handling pathfinding at 400 TOPS. Complete autonomous environmental mapping.</p>
+                <div class="tech-tag">05 // Cognitive Compute</div>
+                <h2 class="text-5xl md:text-6xl font-black mb-6">Onboard Neural Edge</h2>
+                <p>The AEROFOLD Brain isn't a flight controller—it's a supercomputer. Running custom Linux kernels, it processes environmental voxels at 400 TOPS, making autonomous collision avoidance instinctive, not reactive.</p>
+            </div>
+        </section>
+
+        <!-- PHASE 2 — DEEP TECH & ENGINEERING TRUST -->
+        <div class="phase-divider"></div>
+
+        <section id="internal">
+            <div class="text-reveal">
+                <div class="tech-tag">06 // Internal Architecture</div>
+                <h2 class="text-5xl md:text-6xl font-black mb-6">Exploded Logic</h2>
+                <p>View the X1 stripped to its core. Every PCB is gold-plated for corrosion resistance, and every connector is vibration-damped with automotive-grade silicone. This is aeronautical integrity, internalized.</p>
+                <div class="stat-grid">
+                    <div class="stat-item"><div class="stat-val">12-Layer</div><div class="stat-label">PCB Stack</div></div>
+                    <div class="stat-item"><div class="stat-val">IP67</div><div class="stat-label">Internal Seal</div></div>
+                </div>
+            </div>
+        </section>
+
+        <section id="materials">
+            <div class="text-reveal">
+                <div class="tech-tag">07 // Material Science</div>
+                <h2 class="text-5xl md:text-6xl font-black mb-6">Magnesium-Lithium Alloy</h2>
+                <p>We utilize the lightest structural metal available on Earth. The main chassis sub-frame is CNC-machined from a single block, ensuring structural harmonics that prevent vibration-induced sensor jitter.</p>
+            </div>
+        </section>
+
+        <section id="safety">
+            <div class="text-reveal">
+                <div class="tech-tag">08 // Operational Safety</div>
+                <h2 class="text-5xl md:text-6xl font-black mb-6">Redundancy Matrix</h2>
+                <p>In the event of a motor failure, the X1 dynamically recalculates its center of gravity and thrust vector, allowing for a stabilized emergency descent on only three rotors. Failure is an option—crashing is not.</p>
+            </div>
+        </section>
+
+        <section id="security">
+            <div class="text-reveal">
+                <div class="tech-tag">09 // Data Integrity</div>
+                <h2 class="text-5xl md:text-6xl font-black mb-6">Sovereign Data Pipe</h2>
+                <p>Military-grade AES-256 bit encryption secures the command link. No data leaves the device unless authorized via your hardware key. Your mission data is your sovereign asset.</p>
+            </div>
+        </section>
+
+        <section id="compliance">
+            <div class="text-reveal">
+                <div class="tech-tag">10 // Certification</div>
+                <h2 class="text-5xl md:text-6xl font-black mb-6">Global Standard Ready</h2>
+                <p>Fully compliant with FAA Remote ID, DGCA Type Certification, and CE Category C2. The X1 is ready for legal deployment in all major global airspace jurisdictions from day one.</p>
+                <div class="stat-grid">
+                    <div class="stat-item"><div class="stat-val">FAA</div><div class="stat-label">Remote ID</div></div>
+                    <div class="stat-item"><div class="stat-val">CE</div><div class="stat-label">Cat C2 Cert</div></div>
+                </div>
+            </div>
+        </section>
+
+        <section id="reliability">
+            <div class="text-reveal">
+                <div class="tech-tag">11 // Reliability Metrics</div>
+                <h2 class="text-5xl md:text-6xl font-black mb-6">Validated Endurance</h2>
+                <p>With a Mean Time Between Failures (MTBF) of 5,000 flight hours, the X1 is built for daily commercial service. We don't just test to fail; we test to endure.</p>
+                <div class="stat-grid">
+                    <div class="stat-item"><div class="stat-val">5,000h</div><div class="stat-label">MTBF Rating</div></div>
+                    <div class="stat-item"><div class="stat-val">99.9%</div><div class="stat-label">Launch Success</div></div>
+                </div>
             </div>
         </section>
 
         <section id="cta">
             <div class="text-reveal flex flex-col items-center w-full text-center">
-                <h2 class="text-6xl md:text-8xl font-black italic mb-10">THE FUTURE IS OPEN</h2>
-                <button class="btn-launch px-20 py-8 rounded-sm font-black tracking-widest text-sm uppercase">
-                    Order Series X1 Now
+                <h2 class="text-6xl md:text-8xl font-black italic mb-10">ENGINEERING THE UNSTOPPABLE</h2>
+                <button class="btn-launch px-24 py-10 rounded-sm font-black tracking-widest text-sm uppercase">
+                    Configure Your X1 Fleet
                 </button>
             </div>
         </section>
