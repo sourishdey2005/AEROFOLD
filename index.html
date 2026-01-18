@@ -11,63 +11,159 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
     <style>
         :root { 
-            --accent: #E6B800; /* Slightly darker gold for readability on white */
+            --accent: #D4AF37; 
             --bg: #FFFFFF; 
-            --text-primary: #0A0A0A;
-            --text-secondary: #444444;
+            --text-primary: #000000;
+            --text-secondary: #333333;
+            --hud-blue: #0066FF;
         }
-        body { margin: 0; background-color: var(--bg); color: var(--text-primary); font-family: 'Inter', sans-serif; overflow-x: hidden; }
+        body { 
+            margin: 0; 
+            background-color: var(--bg); 
+            color: var(--text-primary); 
+            font-family: 'Inter', sans-serif; 
+            overflow-x: hidden; 
+        }
         
-        /* Background gradient to keep it professional and not flat */
-        body::before {
-            content: '';
+        /* Fixed Background Layer */
+        .bg-layer {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: radial-gradient(circle at 50% 50%, #ffffff 0%, #f0f4f8 100%);
+            background: radial-gradient(circle at 50% 50%, #ffffff 0%, #e8edf3 100%);
             z-index: -1;
         }
 
-        canvas { position: fixed; top: 0; left: 0; z-index: 1; pointer-events: none; }
-        .content { position: relative; z-index: 10; pointer-events: none; }
+        /* 3D Canvas Layer */
+        canvas { 
+            position: fixed; 
+            top: 0; 
+            left: 0; 
+            z-index: 2; 
+            pointer-events: none; 
+        }
+
+        /* HUD Layer */
+        .hud-ui { 
+            position: fixed; 
+            inset: 0; 
+            z-index: 50; 
+            pointer-events: none; 
+            padding: 2rem; 
+            display: flex; 
+            flex-direction: column; 
+            justify-content: space-between; 
+            font-family: 'JetBrains Mono', monospace; 
+            color: var(--hud-blue); 
+            text-shadow: 0 1px 2px rgba(255,255,255,0.8);
+        }
+
+        /* Content Layer */
+        .content { 
+            position: relative; 
+            z-index: 100; 
+            pointer-events: none; 
+        }
         
-        section { min-height: 120vh; display: flex; flex-direction: column; justify-content: center; align-items: flex-start; padding: 10vw; text-align: left; }
+        section { 
+            min-height: 120vh; 
+            display: flex; 
+            flex-direction: column; 
+            justify-content: center; 
+            align-items: flex-start; 
+            padding: 10vw; 
+            text-align: left; 
+        }
         
-        .text-reveal { opacity: 0; transform: translateX(-30px); transition: all 1s cubic-bezier(0.16, 1, 0.3, 1); pointer-events: auto; }
-        .text-reveal.active { opacity: 1; transform: translateX(0); }
+        .text-reveal { 
+            opacity: 0; 
+            transform: translateY(20px); 
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1); 
+            pointer-events: auto; 
+            max-width: 600px;
+        }
         
-        .hud-ui { position: fixed; inset: 0; z-index: 5; pointer-events: none; padding: 2rem; display: flex; flex-direction: column; justify-content: space-between; font-family: 'JetBrains Mono', monospace; color: #007AFF; opacity: 0.9; }
+        .text-reveal.active { 
+            opacity: 1; 
+            transform: translateY(0); 
+        }
         
-        .loader { position: fixed; inset: 0; background: #fff; z-index: 999; display: flex; flex-direction: column; justify-content: center; align-items: center; transition: opacity 1s ease; }
+        .loader { 
+            position: fixed; 
+            inset: 0; 
+            background: #fff; 
+            z-index: 999; 
+            display: flex; 
+            flex-direction: column; 
+            justify-content: center; 
+            align-items: center; 
+            transition: opacity 1s ease; 
+        }
         
-        .btn-launch { background: #000; color: #fff; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15); pointer-events: auto; border: none; }
-        .btn-launch:hover { background: var(--accent); color: #000; transform: translateY(-2px); }
+        .btn-launch { 
+            background: #000; 
+            color: #fff; 
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1); 
+            pointer-events: auto; 
+            border: none; 
+            transition: all 0.3s ease;
+        }
+        .btn-launch:hover { 
+            background: #0066FF; 
+            transform: translateY(-3px); 
+            box-shadow: 0 20px 40px rgba(0, 102, 255, 0.2);
+        }
         
-        .tech-tag { font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: #007AFF; text-transform: uppercase; letter-spacing: 0.2em; border-left: 2px solid #007AFF; padding-left: 10px; margin-bottom: 1rem; font-weight: 700; }
-        
-        .text-zinc-400 { color: var(--text-secondary); }
-        .tracking-tighter { color: var(--text-primary); }
+        .tech-tag { 
+            font-family: 'JetBrains Mono', monospace; 
+            font-size: 0.8rem; 
+            color: var(--hud-blue); 
+            text-transform: uppercase; 
+            letter-spacing: 0.3em; 
+            border-left: 3px solid var(--hud-blue); 
+            padding-left: 15px; 
+            margin-bottom: 1.5rem; 
+            font-weight: 800; 
+        }
+
+        h1, h2 {
+            text-shadow: 0 2px 10px rgba(255,255,255,0.5);
+            color: #000 !important;
+        }
+
+        p {
+            color: #222 !important;
+            line-height: 1.6;
+        }
+
+        /* Ensure texts are visible over the canvas */
+        .content section div {
+            background: rgba(255, 255, 255, 0.01); /* Invisible but ensures a block */
+            backdrop-filter: blur(0px);
+        }
     </style>
 </head>
 <body>
+    <div class="bg-layer"></div>
+
     <div class="loader" id="loader">
-        <h2 class="text-3xl font-black tracking-tighter italic text-black">AEROFOLD™</h2>
-        <div class="w-48 h-[2px] bg-zinc-200 mt-6 relative">
-            <div class="absolute left-0 top-0 h-full bg-blue-500 shadow-[0_0_15px_rgba(0,122,255,0.5)]" id="loader-progress" style="width: 0%"></div>
+        <h2 class="text-4xl font-black tracking-tighter italic text-black">AEROFOLD™</h2>
+        <div class="w-64 h-[3px] bg-zinc-100 mt-8 relative">
+            <div class="absolute left-0 top-0 h-full bg-blue-600" id="loader-progress" style="width: 0%"></div>
         </div>
-        <p class="mt-4 text-[10px] uppercase tracking-widest text-zinc-400 font-mono">Initializing Light Theme Core...</p>
+        <p class="mt-4 text-[11px] uppercase tracking-widest text-zinc-500 font-mono font-bold">Initializing Avionics...</p>
     </div>
 
     <div class="hud-ui">
         <div class="flex justify-between items-start">
-            <div class="text-xs font-bold">AVIONICS: ONLINE<br>THRUST: STABLE<br>GNSS: 12 SAT</div>
-            <div class="text-right text-xs font-bold">INDUSTRIAL SERIES X1<br>SERIAL: AF-992-K</div>
+            <div class="text-[11px] font-black leading-tight">SYSTEMS: OPTIMAL<br>VECTOR: STABLE<br>GNSS: ACTIVE</div>
+            <div class="text-right text-[11px] font-black">MODEL: SERIES X1<br>ID: #AF-992-K</div>
         </div>
         <div class="flex justify-between items-end">
-            <div class="text-[10px] leading-relaxed font-bold">BATTERY: 98%<br>RANGE: 12.4KM<br>TEMP: 42°C</div>
-            <div class="text-3xl font-bold italic" id="hud-altitude">000ft</div>
+            <div class="text-[11px] font-black">POWER: 98%<br>TEMP: 42°C</div>
+            <div class="text-4xl font-black italic" id="hud-altitude">000ft</div>
         </div>
     </div>
 
@@ -76,82 +172,58 @@
     <main class="content">
         <section id="hero">
             <div class="text-reveal active">
-                <div class="tech-tag">Industrial Grade Performance</div>
-                <h1 class="text-7xl md:text-9xl font-black tracking-tighter leading-none mb-6 italic text-black">AEROFOLD™</h1>
-                <p class="text-xl text-zinc-600 max-w-xl">Ruggedized architecture for extreme survey and heavy-lift operations. Engineered for visibility, built for power.</p>
-                <div class="mt-12 animate-bounce opacity-40 text-xs tracking-widest uppercase text-black">Initiate Deployment Sequence</div>
+                <div class="tech-tag">Next-Gen Industrial</div>
+                <h1 class="text-7xl md:text-9xl font-black tracking-tighter leading-none mb-6 italic">AEROFOLD™</h1>
+                <p class="text-xl font-medium max-w-xl">Engineering Flight, One Fold at a Time. Ruggedized architecture for extreme survey and heavy-lift operations.</p>
+                <div class="mt-16 animate-bounce opacity-60 text-[10px] tracking-[0.4em] uppercase font-black">Scroll to Deploy</div>
             </div>
         </section>
 
         <section id="transition">
             <div class="text-reveal">
                 <div class="tech-tag">Phase 01: Unfold</div>
-                <h2 class="text-5xl font-bold mb-4 text-black">Philosophy of Utility</h2>
-                <p class="text-zinc-600 max-w-md">Our high-visibility "Hazard" livery isn't just for show. It's built for search, rescue, and high-risk inspection in any terrain.</p>
+                <h2 class="text-5xl md:text-6xl font-black mb-6">Philosophy of Utility</h2>
+                <p class="text-lg font-medium">Our high-visibility "Hazard" livery ensures visual tracking in high-risk search and rescue environments.</p>
             </div>
         </section>
 
         <section id="arms">
             <div class="text-reveal">
                 <div class="tech-tag">Kinetic Chassis</div>
-                <h2 class="text-5xl font-bold mb-4 text-black">Heavy Duty Hinges</h2>
-                <p class="text-zinc-600 max-w-md">Reinforced block joints with titanium locking pins ensure absolute rigidity under load.</p>
+                <h2 class="text-5xl md:text-6xl font-black mb-6">Heavy Duty Hinges</h2>
+                <p class="text-lg font-medium">Reinforced block joints with titanium locking pins ensure absolute rigidity under maximum aerodynamic stress.</p>
             </div>
         </section>
 
         <section id="propulsion">
             <div class="text-reveal">
                 <div class="tech-tag">Encapsulated Rotors</div>
-                <h2 class="text-5xl font-bold mb-4 text-black">Propulsion Ring Tech</h2>
-                <p class="text-zinc-600 max-w-md">Protective circular shrouds minimize drag and maximize safety in tight urban environments.</p>
+                <h2 class="text-5xl md:text-6xl font-black mb-6">Propulsion Rings</h2>
+                <p class="text-lg font-medium">Protective circular shrouds minimize tip-vortex drag and maximize operational safety in confined spaces.</p>
             </div>
         </section>
 
         <section id="vision">
             <div class="text-reveal">
-                <div class="tech-tag">Thermal & Optical</div>
-                <h2 class="text-5xl font-bold mb-4 text-black">Precision Vision Core</h2>
-                <p class="text-zinc-600 max-w-md">Mechanical 3-axis gimbal stabilizing dual 1" CMOS sensors with 120fps capability.</p>
+                <div class="tech-tag">Precision Optics</div>
+                <h2 class="text-5xl md:text-6xl font-black mb-6">Vision Core</h2>
+                <p class="text-lg font-medium">Mechanical 3-axis gimbal stabilizing dual 1" CMOS sensors. Crystal clear intelligence, day or night.</p>
             </div>
         </section>
 
         <section id="brain">
             <div class="text-reveal">
                 <div class="tech-tag">Neural Processing</div>
-                <h2 class="text-5xl font-bold mb-4 text-black">Nvidia Powered AI</h2>
-                <p class="text-zinc-600 max-w-md">Dual Jetson-class inference chips handling pathfinding at 400 TOPS. Absolute autonomy.</p>
-            </div>
-        </section>
-
-        <section id="stabilization">
-            <div class="text-reveal">
-                <div class="tech-tag">Avionic Balance</div>
-                <h2 class="text-5xl font-bold mb-4 text-black">6-Axis Flight Control</h2>
-                <p class="text-zinc-600 max-w-md">Active vectoring motors adjust 2000 times per second to neutralize environmental turbulence.</p>
-            </div>
-        </section>
-
-        <section id="battery">
-            <div class="text-reveal">
-                <div class="tech-tag">Solid State Energy</div>
-                <h2 class="text-5xl font-bold mb-4 text-black">Liquid Cooled Cells</h2>
-                <p class="text-zinc-600 max-w-md">Proprietary heat sinks embedded in the main chassis keep battery temps within +/- 2°C for peak life.</p>
-            </div>
-        </section>
-
-        <section id="weather">
-            <div class="text-reveal">
-                <div class="tech-tag">Atmospheric Proof</div>
-                <h2 class="text-5xl font-bold mb-4 text-black">IP67 Immersion Rated</h2>
-                <p class="text-zinc-600 max-w-md">The chassis is salt-fog resistant and dust-proof. Tested in hurricanes, deployed everywhere.</p>
+                <h2 class="text-5xl md:text-6xl font-black mb-6">AI Navigation</h2>
+                <p class="text-lg font-medium">Dual Jetson-class inference chips handling pathfinding at 400 TOPS. Complete autonomous environmental mapping.</p>
             </div>
         </section>
 
         <section id="cta">
             <div class="text-reveal flex flex-col items-center w-full text-center">
-                <h2 class="text-6xl font-black italic mb-8 text-black">LAUNCH THE FUTURE</h2>
-                <button class="btn-launch px-16 py-6 rounded-sm font-black tracking-widest text-sm uppercase transition-all">
-                    Pre-Order Series X1
+                <h2 class="text-6xl md:text-8xl font-black italic mb-10">THE FUTURE IS OPEN</h2>
+                <button class="btn-launch px-20 py-8 rounded-sm font-black tracking-widest text-sm uppercase">
+                    Order Series X1 Now
                 </button>
             </div>
         </section>
