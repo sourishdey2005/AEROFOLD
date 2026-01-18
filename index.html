@@ -137,23 +137,6 @@
             font-size: 1.1rem;
         }
 
-        .stat-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-            gap: 30px;
-            margin-top: 3rem;
-            font-family: 'JetBrains Mono', monospace;
-            width: 100%;
-        }
-
-        .stat-item {
-            border-top: 2px solid #eee;
-            padding-top: 15px;
-        }
-
-        .stat-val { font-weight: 900; color: #000; font-size: 1.4rem; }
-        .stat-label { font-size: 0.75rem; text-transform: uppercase; color: #888; letter-spacing: 0.1em; }
-
         .phase-divider {
             width: 100%;
             height: 1px;
@@ -200,126 +183,106 @@
     <canvas id="webgl"></canvas>
 
     <main class="content">
-        <!-- PHASE 1 — IMMERSIVE PRODUCT STORY -->
         <section id="hero">
             <div class="text-reveal active">
                 <div class="tech-tag">Aeronautical Origami</div>
                 <h1 class="text-7xl md:text-9xl font-black mb-6 italic">AEROFOLD™</h1>
-                <p class="max-w-xl">The convergence of extreme mobility and industrial-grade airframe integrity. A breakthrough in modular aeronautics, optimized for rapid response deployment.</p>
-                <div class="stat-grid">
-                    <div class="stat-item"><div class="stat-val">2.4kg</div><div class="stat-label">Chassis Weight</div></div>
-                    <div class="stat-item"><div class="stat-val">12s</div><div class="stat-label">Deploy Time</div></div>
-                </div>
+                <p class="max-w-xl">Industrial-grade airframe integrity. A breakthrough in modular aeronautics, optimized for rapid response deployment.</p>
             </div>
         </section>
 
-        <section id="philosophy">
-            <div class="text-reveal">
-                <div class="tech-tag">01 // Engineering-First</div>
-                <h2 class="text-5xl md:text-6xl font-black mb-6">Philosophy of Flight</h2>
-                <p>Why does AEROFOLD exist? To solve the paradox of industrial capacity versus tactical portability. Our engineering-first mindset dictates that every millimeter of the airframe must justify its existence through structural support or aerodynamic efficiency.</p>
-            </div>
-        </section>
-
+        <!-- PHASE 01: CORE TECH -->
         <section id="transition">
             <div class="text-reveal">
-                <div class="tech-tag">02 // Kinetic Sequence</div>
+                <div class="tech-tag">01 // Kinetic Sequence</div>
                 <h2 class="text-5xl md:text-6xl font-black mb-6">Folded-to-Flight</h2>
-                <p>Experience the seamless transition from a compact 20cm stowage volume to a full 65cm wingspan. The scroll-scrubbed unfolding sequence mimics biological expansion, synchronized with the activation of the core avionics stack.</p>
+                <p>The scroll-scrubbed unfolding sequence mimics biological expansion, synchronized with the activation of the core avionics stack.</p>
             </div>
         </section>
 
-        <section id="arms">
+        <section id="vision-core">
             <div class="text-reveal">
-                <div class="tech-tag">03 // Structural Mastery</div>
-                <h2 class="text-5xl md:text-6xl font-black mb-6">Precision Arm Engineering</h2>
-                <p>Utilizing high-modulus carbon fiber and titanium T6-7075 alloy, the arm hinges are rated for 50,000 cycles. Stress-tested joints feature a proprietary "Snap-Lock" mechanism that ensures zero-play rigidity under 4G lateral maneuvers.</p>
-            </div>
-        </section>
-
-        <section id="propulsion">
-            <div class="text-reveal">
-                <div class="tech-tag">04 // Dynamic Thrust</div>
-                <h2 class="text-5xl md:text-6xl font-black mb-6">Propulsion Architecture</h2>
-                <p>Advanced motor layout visualization reveals our staggered vertical offset strategy. Airflow simulation across the blade tips achieves a 15% increase in lift-to-power efficiency while reducing acoustic signature.</p>
-            </div>
-        </section>
-
-        <!-- NEW SECTIONS 6-9 -->
-        <section id="vision">
-            <div class="text-reveal">
-                <div class="tech-tag">06 // Optical Precision</div>
+                <div class="tech-tag">02 // Optical Intelligence</div>
                 <h2 class="text-5xl md:text-6xl font-black mb-6">Vision Core System</h2>
-                <p>The 8K cinematic gimbal extends to expose a multi-spectral sensor array. Sensor fusion overlay combines thermal and optical streams in real-time, providing operators with superhuman environmental clarity in zero-lux conditions.</p>
+                <p>Features a cinematic gimbal with active lens extension. Our sensor fusion overlay merges thermal, LIDAR, and 8K optical data into a single, high-fidelity decision stream for the operator.</p>
             </div>
         </section>
 
-        <section id="brain">
+        <section id="ai-brain">
             <div class="text-reveal">
-                <div class="tech-tag">07 // Neural Compute</div>
+                <div class="tech-tag">03 // Neural Processing</div>
                 <h2 class="text-5xl md:text-6xl font-black mb-6">Autonomous Brain</h2>
-                <p>Powered by twin onboard AI neural cores, the X1 processes 45 trillion operations per second. Its real-time decision graph enables sub-millisecond obstacle avoidance and path re-routing in complex GPS-denied environments.</p>
+                <p>Equipped with dual onboard AI chips processing 45 TOPS. The real-time decision graph enables sub-millisecond obstacle avoidance and autonomous mission re-routing in complex GPS-denied zones.</p>
             </div>
         </section>
 
         <section id="stabilization">
             <div class="text-reveal">
-                <div class="tech-tag">08 // Inertial Logic</div>
-                <h2 class="text-5xl md:text-6xl font-black mb-6">Gyro & Stabilization</h2>
-                <p>A sophisticated 6-axis stabilization suite provides a rock-steady platform even in 45-knot gusts. Turbulence compensation algorithms predict micro-climatic shifts, adjusting motor RPM 2,000 times per second.</p>
+                <div class="tech-tag">04 // Inertial Logic</div>
+                <h2 class="text-5xl md:text-6xl font-black mb-6">Stabilization & Gyro</h2>
+                <p>Sophisticated 6-axis stabilization suite with active turbulence compensation. Predictive algorithms adjust motor RPM 2,000 times per second to maintain a rock-steady horizon in 45-knot gusts.</p>
             </div>
         </section>
 
         <section id="battery">
             <div class="text-reveal">
-                <div class="tech-tag">09 // Power Density</div>
+                <div class="tech-tag">05 // Power Density</div>
                 <h2 class="text-5xl md:text-6xl font-black mb-6">Battery Intelligence</h2>
-                <p>Smart battery cells feature integrated heat and power distribution logic. Real-time telemetry monitors cell health and cycle counts, ensuring maximum mission duration while maintaining safety margins under peak loads.</p>
+                <p>Smart high-density cells with integrated heat and power distribution logic. Real-time telemetry monitors cell health, optimizing discharge cycles to maximize mission endurance and safety.</p>
             </div>
         </section>
 
+        <!-- PHASE 02: STRUCTURAL INTEGRITY -->
         <div class="phase-divider"></div>
         <div class="phase-title">Phase 02: Structural Integrity</div>
 
         <section id="internal">
             <div class="text-reveal">
-                <div class="tech-tag">10 // Internal Architecture</div>
-                <h2 class="text-5xl md:text-6xl font-black mb-6">Exploded Logic</h2>
-                <p>View the X1 stripped to its core. Every PCB is gold-plated for corrosion resistance, and every connector is vibration-damped with automotive-grade silicone.</p>
+                <div class="tech-tag">06 // Internal Architecture</div>
+                <h2 class="text-5xl md:text-6xl font-black mb-6">Exploded Logic View</h2>
+                <p>Observe the X1 stripped to its core. This scroll-based exploded model reveals the symbiotic relationship between hardware and cooling pathways. Each part is highlighted to demonstrate its specific function.</p>
             </div>
         </section>
 
+        <section id="materials">
+            <div class="text-reveal">
+                <div class="tech-tag">07 // Elemental Science</div>
+                <h2 class="text-5xl md:text-6xl font-black mb-6">Materials & Build Quality</h2>
+                <p>Our airframe utilizes high-modulus carbon fiber and magnesium-lithium alloy. Microscopic texture zoom reveals the drag-reducing surfaces designed for silent, efficient atmospheric penetration.</p>
+            </div>
+        </section>
+
+        <section id="manufacturing">
+            <div class="text-reveal">
+                <div class="tech-tag">08 // Robotic Assembly</div>
+                <h2 class="text-5xl md:text-6xl font-black mb-6">Manufacturing Precision</h2>
+                <p>Born from CNC-milled billets and robotic assembly lines. 0.01mm tolerances ensure the folding hinges maintain absolute structural rigidity over thousands of deployment cycles.</p>
+            </div>
+        </section>
+
+        <section id="safety">
+            <div class="text-reveal">
+                <div class="tech-tag">09 // Fail-Safe Logic</div>
+                <h2 class="text-5xl md:text-6xl font-black mb-6">Safety Redundancy</h2>
+                <p>Equipped with fail-safe motors and emergency landing AI. If a propulsion unit fails, the system re-calculates thrust vectors instantly to perform a controlled descent, protecting your investment.</p>
+            </div>
+        </section>
+
+        <!-- PHASE 03: OPERATION -->
         <div class="phase-divider"></div>
         <div class="phase-title">Phase 03: Operational Deployment</div>
 
         <section id="inspection">
             <div class="text-reveal">
-                <div class="tech-tag">11 // Industrial Inspection</div>
+                <div class="tech-tag">10 // Industrial Inspection</div>
                 <h2 class="text-5xl md:text-6xl font-black mb-6">Infrastructure Vitality</h2>
-                <p>From high-voltage power lines to offshore oil rigs, the X1 provides non-destructive testing at scale. Integrated LIDAR creates sub-centimeter digital twins.</p>
-            </div>
-        </section>
-
-        <section id="defense">
-            <div class="text-reveal">
-                <div class="tech-tag">12 // Defense & Surveillance</div>
-                <h2 class="text-5xl md:text-6xl font-black mb-6">Tactical Perimeter</h2>
-                <p>Silent, encrypted, and invisible to traditional radar. The Series X1 provides a persistent tactical eye with thermal overlays for absolute environmental awareness.</p>
-            </div>
-        </section>
-
-        <section id="agriculture">
-            <div class="text-reveal">
-                <div class="tech-tag">13 // Agriculture Intelligence</div>
-                <h2 class="text-5xl md:text-6xl font-black mb-6">Crop Health Mapping</h2>
-                <p>Harness NDVI visualization to monitor chlorophyll fluorescence across thousands of hectares, enabling hyper-targeted fertilization.</p>
+                <p>From high-voltage power lines to offshore oil rigs, the X1 provides non-destructive testing at scale. Controlled rotation ensures the stability of our multi-spectral imaging platform.</p>
             </div>
         </section>
 
         <section id="cta">
             <div class="text-reveal flex flex-col items-center w-full text-center">
                 <h2 class="text-6xl md:text-8xl font-black italic mb-10">THE FUTURE IS DEPLOYED</h2>
-                <p class="mb-12 text-zinc-500 font-mono text-sm uppercase tracking-widest">AEROFOLD INDUSTRIAL SYSTEMS // GENESIS X1 // 2025</p>
                 <button class="btn-launch px-24 py-10 rounded-sm font-black tracking-widest text-sm uppercase">
                     Consult an Expert
                 </button>
