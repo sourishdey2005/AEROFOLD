@@ -1,8 +1,8 @@
 
 /**
  * AEROFOLD™ - INDUSTRIAL REPLICA
- * Advanced Storytelling Engine (v3.1)
- * Fix: Responsive Framing & Viewport Safety Logic
+ * Advanced Storytelling Engine (v3.3)
+ * Features: Vision, AI, Stabilization, Battery Intelligence, Exploded Logic
  */
 
 class AerofoldApp {
@@ -20,7 +20,8 @@ class AerofoldApp {
             gear: null, 
             aiChip: null, 
             camera: null, 
-            chassisPlates: [] 
+            chassisPlates: [],
+            batteryCells: []
         };
         this.particles = null;
         this.scanner = null;
@@ -39,13 +40,11 @@ class AerofoldApp {
         this.setupTimelines();
         this.setupTextObserver();
         this.animate();
-        this.onResize(); // Initial frame check
+        this.onResize(); 
     }
 
     setupCamera() {
-        // dynamic FOV based on aspect ratio to keep drone in frame
-        const fov = window.innerWidth < 768 ? 50 : 35;
-        this.camera = new THREE.PerspectiveCamera(fov, window.innerWidth / window.innerHeight, 0.1, 1000);
+        this.camera = new THREE.PerspectiveCamera(35, window.innerWidth / window.innerHeight, 0.1, 1000);
         this.camera.position.set(0, 2, 12);
         this.camera.lookAt(0, 0, 0);
     }
@@ -105,7 +104,7 @@ class AerofoldApp {
                     gsap.to(this.loader, { opacity: 0, duration: 1, onComplete: () => this.loader.style.display = 'none' });
                     res();
                 }
-            }, 25);
+            }, 20);
         });
     }
 
@@ -116,23 +115,38 @@ class AerofoldApp {
         const matBlack = new THREE.MeshStandardMaterial({ color: 0x0A0A0A, metalness: 0.5, roughness: 0.3 });
         const matGray = new THREE.MeshStandardMaterial({ color: 0x444444, metalness: 0.8, roughness: 0.2 });
         const matGlowBlue = new THREE.MeshStandardMaterial({ color: 0x007AFF, emissive: 0x007AFF, emissiveIntensity: 5 });
+        const matRed = new THREE.MeshStandardMaterial({ color: 0xFF0000, emissive: 0xFF0000, emissiveIntensity: 2 });
 
         const mainHull = new THREE.Mesh(new THREE.BoxGeometry(1.4, 0.4, 2.6), matBlack);
         this.parts.chassisPlates.push(mainHull);
+        
         const topPlate = new THREE.Mesh(new THREE.BoxGeometry(1.2, 0.1, 2.4), matYellow);
         topPlate.position.y = 0.25;
         this.parts.chassisPlates.push(topPlate);
+        
         const bottomPlate = new THREE.Mesh(new THREE.BoxGeometry(1.2, 0.1, 2.4), matGray);
         bottomPlate.position.y = -0.25;
         this.parts.chassisPlates.push(bottomPlate);
+        
         const nose = new THREE.Mesh(new THREE.BoxGeometry(1, 0.4, 0.6), matYellow);
         nose.position.set(0, -0.1, 1.5);
         this.parts.chassisPlates.push(nose);
         this.droneBody.add(mainHull, topPlate, bottomPlate, nose);
 
+        // Internal AI Core
         this.parts.aiChip = new THREE.Mesh(new THREE.BoxGeometry(0.5, 0.05, 0.5), matGlowBlue);
+        this.parts.aiChip.position.y = 0.05;
         this.parts.aiChip.scale.set(0,0,0);
         this.droneBody.add(this.parts.aiChip);
+
+        // Battery Cells
+        for(let i = 0; i < 4; i++) {
+            const cell = new THREE.Mesh(new THREE.BoxGeometry(0.2, 0.3, 0.4), matBlack);
+            cell.position.set((i % 2 === 0 ? 0.3 : -0.3), 0, (i < 2 ? 0.4 : -0.4));
+            cell.visible = false;
+            this.parts.batteryCells.push(cell);
+            this.droneBody.add(cell);
+        }
 
         const armConfigs = [
             { pos: [1.8, 0, 1.2], rot: 0.4 },
@@ -185,7 +199,7 @@ class AerofoldApp {
         this.droneBody.add(this.parts.gear);
 
         this.drone.add(this.droneBody);
-        this.drone.scale.set(0.2, 0.2, 0.2); // Start small for hero
+        this.drone.scale.set(0.15, 0.15, 0.15);
         this.scene.add(this.drone);
     }
 
@@ -200,57 +214,62 @@ class AerofoldApp {
             }
         });
 
-        // 1. PHASE 1: UNFOLD (0 - 25%) - Center Focused
-        mainTl.to(this.drone.scale, { x: 0.8, y: 0.8, z: 0.8, duration: 2 }, 0);
-        mainTl.to(this.drone.position, { x: 0, y: 0, z: 0, duration: 2 }, 0);
+        // 1. HERO & PHILOSOPHY
+        mainTl.to(this.drone.scale, { x: 0.7, y: 0.7, z: 0.7, duration: 3 }, 0);
+        mainTl.to(this.drone.rotation, { y: 0.4, x: 0.1, duration: 3 }, 0);
         
+        // 2. UNFOLDING
         this.parts.arms.forEach((arm, i) => {
-            mainTl.to(arm.position, { x: 0, z: 0, duration: 2 }, 1);
-            mainTl.to(arm.rotation, { y: i < 2 ? 0.3 : -0.3, duration: 2 }, 1);
+            mainTl.to(arm.position, { x: 0, z: 0, duration: 2 }, 4);
+            mainTl.to(arm.rotation, { y: i < 2 ? 0.3 : -0.3, duration: 2 }, 4);
         });
-        mainTl.to(this.parts.props, { rotationY: Math.PI * 180, ease: "none", duration: 8 }, 2);
+        mainTl.to(this.parts.props, { rotationY: Math.PI * 180, ease: "none", duration: 10 }, 5);
 
-        // 2. PHASE 2: EXPLODED DETAIL (25% - 50%) - Keeping it centered
-        mainTl.to(this.parts.chassisPlates[1].position, { y: 1.2, duration: 3 }, 4); 
-        mainTl.to(this.parts.chassisPlates[2].position, { y: -1.2, duration: 3 }, 4);
-        mainTl.to(this.parts.aiChip.scale, { x: 1.5, y: 1.5, z: 1.5, duration: 2 }, 4.5);
-        // Camera stays relatively centered but orbits slightly
-        mainTl.to(this.camera.position, { x: 2, y: 1.5, z: 8, duration: 4 }, 4);
+        // 3. VISION CORE CLOSE-UP
+        mainTl.to(this.camera.position, { x: 0, y: 1.5, z: 6, duration: 4 }, 8);
+        mainTl.to(this.drone.rotation, { x: 0.4, y: 0, duration: 4 }, 8);
+        mainTl.to(this.parts.camera.position, { z: 1.6, duration: 2 }, 9);
 
-        // Re-assemble
-        mainTl.to(this.parts.chassisPlates[1].position, { y: 0.25, duration: 2 }, 7);
-        mainTl.to(this.parts.chassisPlates[2].position, { y: -0.25, duration: 2 }, 7);
-        mainTl.to(this.parts.aiChip.scale, { x: 0, y: 0, z: 0, duration: 1 }, 7);
+        // 4. AI CORE BRAIN REVEAL
+        mainTl.to(this.parts.chassisPlates[1].position, { y: 0.8, duration: 3 }, 12);
+        mainTl.to(this.parts.aiChip.scale, { x: 1.5, y: 1.5, z: 1.5, duration: 2 }, 13);
+        mainTl.to(this.camera.position, { x: 2, y: 2, z: 8, duration: 4 }, 12);
 
-        // 3. PHASE 3: MISSION SIMULATION (50% - 90%) - Safe Orbits
-        // Orbit from further away to ensure wings don't clip viewport
-        mainTl.to(this.camera.position, { x: 0, y: 6, z: 14, duration: 5 }, 8);
-        mainTl.to(this.drone.rotation, { y: Math.PI * 4, duration: 10 }, 8);
-        
-        // Scan Sequence - Zoom back in but watch FOV
-        mainTl.to(this.camera.position, { x: 0, y: -1, z: 10, duration: 4 }, 12);
-        mainTl.to(this.scanner.material, { opacity: 0.3, duration: 1 }, 13);
-        mainTl.to(this.scanner.scale, { x: 1.2, y: 1.2, duration: 3, repeat: 2, yoyo: true }, 13);
-        
-        // Defense Mode - Pivot but stay centered
-        mainTl.to(this.scanner.material, { opacity: 0, duration: 1 }, 17);
-        mainTl.to(this.drone.rotation, { y: Math.PI * 6, x: 0.2, duration: 4 }, 17);
-        mainTl.to(this.camera.position, { x: 0, y: 0, z: 12, duration: 4 }, 17);
+        // 5. STABILIZATION DEMO
+        mainTl.to(this.parts.aiChip.scale, { x: 1, y: 1, z: 1, duration: 2 }, 16);
+        mainTl.to(this.drone.rotation, { z: 0.2, x: -0.2, repeat: 3, yoyo: true, duration: 1 }, 16);
+        mainTl.to(this.parts.camera.rotation, { z: -0.2, x: 0.2, repeat: 3, yoyo: true, duration: 1 }, 16);
 
-        // Weather Resistance - Subtle Shake
-        mainTl.to(this.particles.material, { opacity: 1, duration: 2 }, 22);
-        mainTl.to(this.drone.position, { x: 0.1, repeat: 10, yoyo: true, duration: 0.1 }, 22);
+        // 6. BATTERY INTELLIGENCE
+        mainTl.to(this.parts.chassisPlates[1].position, { y: 0.25, duration: 2 }, 19);
+        mainTl.to(this.parts.chassisPlates[0].material, { opacity: 0.2, transparent: true, duration: 2 }, 19);
+        this.parts.batteryCells.forEach(c => {
+            mainTl.set(c, { visible: true }, 19);
+            mainTl.to(c.material, { emissiveIntensity: 5, duration: 2 }, 20);
+        });
 
-        // 4. FINAL: LANDING (90% - 100%) - Landing on Screen Center
-        mainTl.to(this.parts.gear.scale, { y: 1, duration: 2 }, 26);
-        mainTl.to(this.drone.position, { y: -1, x: 0, duration: 3 }, 26);
-        mainTl.to(this.camera.position, { x: -4, y: 2, z: 14, duration: 5 }, 26);
-        mainTl.to(this.drone.rotation, { x: 0, y: Math.PI * 8.2, z: 0, duration: 6 }, 26);
+        // 7. EXPLODED ARCHITECTURE
+        mainTl.to(this.parts.chassisPlates[1].position, { y: 2, duration: 3 }, 23);
+        mainTl.to(this.parts.chassisPlates[2].position, { y: -2, duration: 3 }, 23);
+        mainTl.to(this.parts.chassisPlates[0].material, { opacity: 1, duration: 1 }, 23);
+
+        // 8. FINAL MISSION MODE
+        mainTl.to(this.parts.chassisPlates[1].position, { y: 0.25, duration: 2 }, 26);
+        mainTl.to(this.parts.chassisPlates[2].position, { y: -0.25, duration: 2 }, 26);
+        mainTl.to(this.camera.position, { x: 0, y: 5, z: 16, duration: 5 }, 26);
+        mainTl.to(this.drone.rotation, { y: Math.PI * 10, duration: 15 }, 26);
+        mainTl.to(this.scanner.material, { opacity: 0.2, duration: 1 }, 28);
+        mainTl.to(this.particles.material, { opacity: 0.7, duration: 3 }, 30);
+
+        // Landing
+        mainTl.to(this.parts.gear.scale, { y: 1, duration: 2 }, 38);
+        mainTl.to(this.drone.position, { y: -1.5, duration: 4 }, 38);
+        mainTl.to(this.camera.position, { x: -3, y: 2, z: 12, duration: 5 }, 38);
 
         ScrollTrigger.create({
             trigger: ".content",
             onUpdate: (self) => {
-                const alt = Math.floor(self.progress * 2500);
+                const alt = Math.floor(self.progress * 3500);
                 if(this.hudAltitude) this.hudAltitude.innerText = `${alt.toString().padStart(4, '0')}ft`;
             }
         });
@@ -276,16 +295,8 @@ class AerofoldApp {
         const width = window.innerWidth;
         const height = window.innerHeight;
         const aspect = width / height;
-
         this.camera.aspect = aspect;
-        
-        // Adjust FOV to prevent the drone from leaving screen on narrow viewports
-        if (aspect < 1) { // Portrait / Mobile
-            this.camera.fov = 60;
-        } else {
-            this.camera.fov = 35;
-        }
-        
+        this.camera.fov = aspect < 1 ? 55 : 35;
         this.camera.updateProjectionMatrix();
         this.renderer.setSize(width, height);
     }
@@ -294,11 +305,16 @@ class AerofoldApp {
         requestAnimationFrame(() => this.animate());
         const time = Date.now() * 0.001;
         if(this.drone) {
-            // Very subtle hover so it doesn't drift too far
             this.drone.position.y += Math.sin(time * 1.5) * 0.002;
-            this.parts.aiChip.material.emissiveIntensity = 4 + Math.sin(time * 12) * 4;
+            this.parts.aiChip.material.emissiveIntensity = 4 + Math.sin(time * 10) * 4;
             const lens = this.parts.camera.children[0].children[1];
-            if(lens) lens.material.emissiveIntensity = 3 + Math.sin(time * 5) * 2;
+            if(lens) lens.material.emissiveIntensity = 3 + Math.sin(time * 6) * 2;
+            
+            this.parts.batteryCells.forEach((c, i) => {
+                if(c.visible) {
+                    c.material.emissiveIntensity = 2 + Math.sin(time * 3 + i) * 2;
+                }
+            });
         }
         if(this.scanner && this.scanner.material.opacity > 0) {
             this.scanner.position.copy(this.drone.position);
@@ -306,10 +322,10 @@ class AerofoldApp {
             this.scanner.rotation.y = time * 2;
         }
         if(this.particles && this.particles.material.opacity > 0) {
-            const positions = this.particles.geometry.attributes.position.array;
-            for(let i = 1; i < positions.length; i += 3) {
-                positions[i] -= 0.15;
-                if(positions[i] < -30) positions[i] = 30;
+            const pos = this.particles.geometry.attributes.position.array;
+            for(let i = 1; i < pos.length; i += 3) {
+                pos[i] -= 0.15;
+                if(pos[i] < -30) pos[i] = 30;
             }
             this.particles.geometry.attributes.position.needsUpdate = true;
         }
