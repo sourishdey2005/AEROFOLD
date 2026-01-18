@@ -64,7 +64,7 @@
         }
         
         section { 
-            min-height: 140vh; 
+            min-height: 160vh; 
             display: flex; 
             flex-direction: column; 
             justify-content: center; 
@@ -78,7 +78,7 @@
             transform: translateY(40px); 
             transition: all 1.2s cubic-bezier(0.16, 1, 0.3, 1); 
             pointer-events: auto; 
-            max-width: 700px;
+            max-width: 650px;
         }
         
         .text-reveal.active { 
@@ -156,6 +156,56 @@
             width: 100%;
             margin-bottom: 2rem;
         }
+
+        .badge-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            margin-top: 2rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.7rem;
+            font-weight: bold;
+            color: var(--hud-blue);
+        }
+
+        .badge {
+            border: 1px solid rgba(0, 102, 255, 0.3);
+            padding: 10px;
+            text-align: center;
+            background: rgba(0, 102, 255, 0.05);
+            transition: transform 0.3s ease;
+        }
+        .badge:hover { transform: scale(1.05); }
+
+        .align-right { align-self: flex-end; text-align: right; }
+        .align-right .tech-tag { border-left: none; border-right: 4px solid var(--hud-blue); padding-left: 0; padding-right: 15px; }
+
+        .metric-card {
+            background: #f8fafc;
+            border-left: 4px solid #000;
+            padding: 1.5rem;
+            margin-top: 2rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 4px;
+            background: #e2e8f0;
+            margin: 1rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+        .progress-fill {
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            background: var(--hud-blue);
+            width: 0%;
+            transition: width 1.5s cubic-bezier(0.19, 1, 0.22, 1);
+        }
+        .text-reveal.active .progress-fill { width: 94%; }
     </style>
 </head>
 <body>
@@ -200,83 +250,82 @@
             </div>
         </section>
 
-        <section id="vision-core">
-            <div class="text-reveal">
-                <div class="tech-tag">02 // Optical Intelligence</div>
-                <h2 class="text-5xl md:text-6xl font-black mb-6">Vision Core System</h2>
-                <p>Features a cinematic gimbal with active lens extension. Our sensor fusion overlay merges thermal, LIDAR, and 8K optical data into a single, high-fidelity decision stream for the operator.</p>
-            </div>
-        </section>
-
-        <section id="ai-brain">
-            <div class="text-reveal">
-                <div class="tech-tag">03 // Neural Processing</div>
-                <h2 class="text-5xl md:text-6xl font-black mb-6">Autonomous Brain</h2>
-                <p>Equipped with dual onboard AI chips processing 45 TOPS. The real-time decision graph enables sub-millisecond obstacle avoidance and autonomous mission re-routing in complex GPS-denied zones.</p>
-            </div>
-        </section>
-
-        <section id="stabilization">
-            <div class="text-reveal">
-                <div class="tech-tag">04 // Inertial Logic</div>
-                <h2 class="text-5xl md:text-6xl font-black mb-6">Stabilization & Gyro</h2>
-                <p>Sophisticated 6-axis stabilization suite with active turbulence compensation. Predictive algorithms adjust motor RPM 2,000 times per second to maintain a rock-steady horizon in 45-knot gusts.</p>
-            </div>
-        </section>
-
-        <section id="battery">
-            <div class="text-reveal">
-                <div class="tech-tag">05 // Power Density</div>
-                <h2 class="text-5xl md:text-6xl font-black mb-6">Battery Intelligence</h2>
-                <p>Smart high-density cells with integrated heat and power distribution logic. Real-time telemetry monitors cell health, optimizing discharge cycles to maximize mission endurance and safety.</p>
-            </div>
-        </section>
-
         <!-- PHASE 02: STRUCTURAL INTEGRITY -->
         <div class="phase-divider"></div>
         <div class="phase-title">Phase 02: Structural Integrity</div>
 
-        <section id="internal">
+        <section id="materials" class="align-right">
             <div class="text-reveal">
-                <div class="tech-tag">06 // Internal Architecture</div>
-                <h2 class="text-5xl md:text-6xl font-black mb-6">Exploded Logic View</h2>
-                <p>Observe the X1 stripped to its core. This scroll-based exploded model reveals the symbiotic relationship between hardware and cooling pathways. Each part is highlighted to demonstrate its specific function.</p>
-            </div>
-        </section>
-
-        <section id="materials">
-            <div class="text-reveal">
-                <div class="tech-tag">07 // Elemental Science</div>
-                <h2 class="text-5xl md:text-6xl font-black mb-6">Materials & Build Quality</h2>
-                <p>Our airframe utilizes high-modulus carbon fiber and magnesium-lithium alloy. Microscopic texture zoom reveals the drag-reducing surfaces designed for silent, efficient atmospheric penetration.</p>
-            </div>
-        </section>
-
-        <section id="manufacturing">
-            <div class="text-reveal">
-                <div class="tech-tag">08 // Robotic Assembly</div>
-                <h2 class="text-5xl md:text-6xl font-black mb-6">Manufacturing Precision</h2>
-                <p>Born from CNC-milled billets and robotic assembly lines. 0.01mm tolerances ensure the folding hinges maintain absolute structural rigidity over thousands of deployment cycles.</p>
+                <div class="tech-tag">02 // Elemental Science</div>
+                <h2 class="text-5xl md:text-6xl font-black mb-6">Materials & Quality</h2>
+                <p>High-modulus carbon fiber meets magnesium-lithium alloy. Microscopic texture zoom reveals drag-reducing surfaces designed for silent, efficient atmospheric penetration.</p>
             </div>
         </section>
 
         <section id="safety">
             <div class="text-reveal">
-                <div class="tech-tag">09 // Fail-Safe Logic</div>
+                <div class="tech-tag">03 // Fail-Safe Logic</div>
                 <h2 class="text-5xl md:text-6xl font-black mb-6">Safety Redundancy</h2>
-                <p>Equipped with fail-safe motors and emergency landing AI. If a propulsion unit fails, the system re-calculates thrust vectors instantly to perform a controlled descent, protecting your investment.</p>
+                <p>Equipped with fail-safe motors and emergency landing AI. If a propulsion unit fails, the system re-calculates thrust vectors instantly to protect your investment.</p>
             </div>
         </section>
 
-        <!-- PHASE 03: OPERATION -->
+        <!-- PHASE 03: INTELLIGENCE & COMPLIANCE -->
         <div class="phase-divider"></div>
-        <div class="phase-title">Phase 03: Operational Deployment</div>
+        <div class="phase-title">Phase 03: Intelligence & Compliance</div>
 
-        <section id="inspection">
+        <section id="compliance">
             <div class="text-reveal">
-                <div class="tech-tag">10 // Industrial Inspection</div>
-                <h2 class="text-5xl md:text-6xl font-black mb-6">Infrastructure Vitality</h2>
-                <p>From high-voltage power lines to offshore oil rigs, the X1 provides non-destructive testing at scale. Controlled rotation ensures the stability of our multi-spectral imaging platform.</p>
+                <div class="tech-tag">04 // Global Standards</div>
+                <h2 class="text-5xl md:text-6xl font-black mb-6">Compliance & Certification</h2>
+                <p>The Series X1 is globally ready, meeting the most stringent aeronautical regulations for commercial and industrial operations including DGCA Type-C and FAA Part 107.</p>
+                <div class="badge-grid">
+                    <div class="badge">DGCA TYPE-C</div>
+                    <div class="badge">FAA PART 107</div>
+                    <div class="badge">CE CLASS C2</div>
+                </div>
+            </div>
+        </section>
+
+        <section id="ota" class="align-right">
+            <div class="text-reveal">
+                <div class="tech-tag">05 // Wireless Evolution</div>
+                <h2 class="text-5xl md:text-6xl font-black mb-6">Firmware & OTA</h2>
+                <p>Your fleet evolves in real-time. Wireless OTA updates deliver performance enhancements, updated mission parameters, and security patches without hardware downtime.</p>
+            </div>
+        </section>
+
+        <section id="ai-pipeline">
+            <div class="text-reveal">
+                <div class="tech-tag">06 // Neural Evolution</div>
+                <h2 class="text-5xl md:text-6xl font-black mb-6">AI Model Pipeline</h2>
+                <p>Simulation → Real-world transfer. We train our models in hyper-realistic physics engines before deploying to the airframe, ensuring 99.9% reliability in unpredictable edge-case scenarios.</p>
+            </div>
+        </section>
+
+        <section id="edge-ai" class="align-right">
+            <div class="text-reveal">
+                <div class="tech-tag">07 // Compute Logic</div>
+                <h2 class="text-5xl md:text-6xl font-black mb-6">Edge AI vs Cloud</h2>
+                <p>Ultra-low latency processing happens directly on the airframe (0.4ms) for flight-critical decisions, while analytical telemetry is streamed to the cloud for heavy computation.</p>
+            </div>
+        </section>
+
+        <section id="reliability">
+            <div class="text-reveal">
+                <div class="tech-tag">08 // Operational Truth</div>
+                <h2 class="text-5xl md:text-6xl font-black mb-6">Reliability Metrics</h2>
+                <p>Proven resilience in extreme environments. Our MTBF (Mean Time Between Failure) charts demonstrate the durability of the Series X1 powertrain and logic board.</p>
+                <div class="metric-card">
+                    <div class="flex justify-between items-end mb-2">
+                        <div class="text-[10px] font-mono font-bold">MTBF: 12,000 FLIGHT HOURS</div>
+                        <div class="text-[10px] font-mono text-blue-600">RELIABILITY INDEX: 0.999</div>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill"></div>
+                    </div>
+                    <div class="text-[10px] font-mono mt-2 text-zinc-500 uppercase">System failure rate: < 0.004% / 1000h</div>
+                </div>
             </div>
         </section>
 
